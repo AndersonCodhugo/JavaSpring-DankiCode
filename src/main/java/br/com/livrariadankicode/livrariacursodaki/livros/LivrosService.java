@@ -4,6 +4,9 @@ import lombok.RequiredArgsConstructor;
 import org.modelmapper.ModelMapper;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
+import java.util.stream.Collectors;
+
 @Service
 @RequiredArgsConstructor
 public class LivrosService {
@@ -17,6 +20,10 @@ public class LivrosService {
         livrosRepository.save(livro);
 
         return modelMapper.map(livro, LivrosDTO.class);
+    }
+
+    public List<LivrosDTO> buscarTodos() {
+        return livrosRepository.findAll().stream().map(l -> modelMapper.map(l, LivrosDTO.class)).collect(Collectors.toList());
     }
 }
 

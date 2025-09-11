@@ -1,10 +1,10 @@
 package br.com.livrariadankicode.livrariacursodaki.livros;
 
+import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
+
+import java.util.List;
 
 @RestController
 @RequestMapping("/livros")
@@ -13,8 +13,14 @@ public class LivrosController {
 
     private final LivrosService livrosService;
 
-@PostMapping
-    public void cadastrar(@RequestBody LivrosDTO dto) {
+    @PostMapping
+        public void cadastrar(@RequestBody @Valid LivrosDTO dto) {
+
         livrosService.criarLivro(dto);
+    }
+
+    @GetMapping
+        public List<LivrosDTO> buscasTodos() {
+            return livrosService.buscarTodos();
     }
 }
