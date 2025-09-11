@@ -1,5 +1,7 @@
 package br.com.livrariadankicode.livrariacursodaki.livros;
 
+import jakarta.persistence.EntityNotFoundException;
+import jakarta.validation.constraints.NotNull;
 import lombok.RequiredArgsConstructor;
 import org.modelmapper.ModelMapper;
 import org.springframework.stereotype.Service;
@@ -24,6 +26,22 @@ public class LivrosService {
 
     public List<LivrosDTO> buscarTodos() {
         return livrosRepository.findAll().stream().map(l -> modelMapper.map(l, LivrosDTO.class)).collect(Collectors.toList());
+    }
+
+    public LivrosDTO buscarPorId(Long id) {
+        Livros livro = livrosRepository.findById(id).orElseThrow(() -> new EntityNotFoundException());
+        return modelMapper.map(livro, LivrosDTO.class);
+    }
+
+    public LivrosDTO atualizarLivro(Long id, LivrosDTO dto) {
+        Livros livro = modelMapper.map(dto, Livros.class);
+        livro.setId(id);
+        livro = livrosRepository.save(livro);
+        return modelMapper.map(livro, LivrosDTO.class);
+    }
+
+    public void remover(@NotNull Long id) {
+        livrosRepository.deleteById(id);
     }
 }
 

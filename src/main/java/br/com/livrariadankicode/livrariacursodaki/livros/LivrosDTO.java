@@ -12,6 +12,8 @@ import lombok.Setter;
 @Setter
 public class LivrosDTO {
 
+    private Long id;
+
     @NotBlank
     private String titulo;
 
