@@ -4,6 +4,8 @@ import jakarta.persistence.EntityNotFoundException;
 import jakarta.validation.constraints.NotNull;
 import lombok.RequiredArgsConstructor;
 import org.modelmapper.ModelMapper;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -24,8 +26,8 @@ public class LivrosService {
         return modelMapper.map(livro, LivrosDTO.class);
     }
 
-    public List<LivrosDTO> buscarTodos() {
-        return livrosRepository.findAll().stream().map(l -> modelMapper.map(l, LivrosDTO.class)).collect(Collectors.toList());
+    public Page<LivrosDTO> buscarTodos(Pageable paginacao) {
+        return livrosRepository.findAll(paginacao).map(l -> modelMapper.map(l, LivrosDTO.class));
     }
 
     public LivrosDTO buscarPorId(Long id) {
