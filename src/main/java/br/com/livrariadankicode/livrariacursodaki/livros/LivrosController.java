@@ -1,5 +1,6 @@
 package br.com.livrariadankicode.livrariacursodaki.livros;
 
+import io.swagger.v3.oas.annotations.security.SecurityRequirement;
 import jakarta.validation.Valid;
 import jakarta.validation.constraints.NotNull;
 import lombok.RequiredArgsConstructor;
@@ -16,6 +17,7 @@ import java.net.URI;
 @RestController
 @RequestMapping("/livros")
 @RequiredArgsConstructor
+@SecurityRequirement(name = "bearer-key")
 public class LivrosController {
 
     private final LivrosService livrosService;
